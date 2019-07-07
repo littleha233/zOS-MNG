@@ -1387,7 +1387,7 @@ public class SmsController {
     //ismf 13.1
     @CrossOrigin(origins = "*", allowCredentials = "true")
     @RequestMapping(value = "/sms/ismf/13/1", method = RequestMethod.POST)
-    public ResponseEntity<JCLInfo> subJob131(HttpSession session){
+    public ResponseEntity<JCLInfo> subJob131( @RequestBody Map<String,String> map, HttpSession session){
         Object ZOSMF_JSESSIONID = session.getAttribute("ZOSMF_JSESSIONID");
         Object ZOSMF_LtpaToken2 = session.getAttribute("ZOSMF_LtpaToken2");
         Object ZOSMF_Address = session.getAttribute("ZOSMF_Address");
@@ -1407,6 +1407,13 @@ public class SmsController {
             headers.setContentType(MediaType.TEXT_PLAIN);
             headers.add("Cookie", ZOSMF_JSESSIONID.toString() + ";" + ZOSMF_LtpaToken2);
             //body
+            //获取参数
+            String id = map.get("id");
+            String Scds = map.get("scds");
+            String memName = map.get("memName");
+            String listName = map.get("listName");
+            String testName = map.get("testName");
+
             StringBuffer sb = new StringBuffer();
             sb.append("//ST010113 JOB (ACCT),'ST010',MSGCLASS=H,");
             sb.append("//      NOTIFY=ST010,CLASS=A,MSGLEVEL=(1,1),TIME=(0,10)\n");
